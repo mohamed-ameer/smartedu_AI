@@ -1,4 +1,9 @@
-
+#### VERY IMPORTANT
+--------------------
+you have to install (aizahraa)folder that contain the ai implementation from here : `https://drive.google.com/file/d/1Ke4vxtp_RQ6esaBkXTW7jnKqg0y1VzY1/view?usp=sharing`
+and put it in the root of the project (not in any app)
+then extract it and remove the rar file
+------------------------------------------------------------------------------------------------------------------------
 #### 1- Update Agora credentals
 In order to use this project you will need to replace the agora credentials in `views.py` and `streams.js`.
 
