@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>{% block title %}{% endblock %}chat</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'Icon/fontawesome-free-6.1.1-web/css/all.css' %}">
+        <link rel="icon" href="{% static 'images/Logo.png' %}" type="image/gif" sizes="16x16">
+        <link rel="stylesheet" href="{% static 'css/final.css' %}">
+        {% block tailwind %}{% endblock %}
+
+        <style>
+            .chat-messages{
+                height: 400px;
+                overflow-y: auto;
+            }
+        </style>
+    </head>
+
+    <body class="">
+        <header class="fixed-top shadow  bg-body rounded">
+            <nav class="navbar navbar-expand-lg navbar">
+                <div class="container-fluid">
+                    <a href="{% url 'index'%}" target="_blank"><svg class="navbar-brand d-md-flex justify-content-md-start" width="280" height="88"
+                        viewBox="0 0 280 88" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="280" height="88" fill="white" />
+                        <path
+                            d="M39.5 59.8612C46.0699 59.8612 51.3959 54.5351 51.3959 47.9653C51.3959 41.3953 46.0699 36.0693 39.5 36.0693V44.3964C41.471 44.3964 43.0687 45.9942 43.0687 47.9653C43.0687 49.9362 41.471 51.534 39.5 51.534V59.8612Z"
+                            fill="#1E88E5" />
+                        <path
+                            d="M79.1529 40.0349C77.1201 39.3909 74.9554 39.0435 72.7093 39.0435C60.9382 39.0435 51.3959 48.5859 51.3959 60.3569C51.3959 61.5385 51.492 62.6975 51.6769 63.8266H64.9196C64.4469 62.7668 64.184 61.5926 64.184 60.3569C64.184 55.6485 68.0009 51.8315 72.7093 51.8315C75.2827 51.8315 77.5898 52.9717 79.1529 54.7745V40.0349Z"
+                            fill="#90CAF9" />
+                        <path
+                            d="M41.5916 24.1736C42.5778 33.0954 50.1418 40.0348 59.3265 40.0348C68.5111 40.0348 76.0752 33.0954 77.0614 24.1736H64.3004C63.5126 26.1485 61.5825 27.5441 59.3265 27.5441C57.0705 27.5441 55.1404 26.1485 54.3525 24.1736H41.5916Z"
+                            fill="#0053CB" />
+                        <path
+                            d="M89.7632 51.1994C88.4798 51.1994 87.3489 50.9948 86.3703 50.5858C85.3997 50.1767 84.6377 49.5671 84.0843 48.7569C83.5388 47.9388 83.2661 46.9241 83.2661 45.7129V45.0031H87.008V45.6407C87.008 47.3492 87.9304 48.2035 89.7753 48.2035C90.6977 48.2035 91.4076 48.0551 91.9049 47.7583C92.4022 47.4615 92.6508 46.9803 92.6508 46.3145C92.6508 45.8413 92.4664 45.4242 92.0974 45.0632C91.7284 44.7023 91.2191 44.3814 90.5694 44.1007C89.9277 43.8119 89.2018 43.5432 88.3916 43.2946C87.5013 43.0138 86.6751 42.6448 85.9131 42.1876C85.1511 41.7304 84.5375 41.1489 84.0722 40.443C83.615 39.7372 83.3864 38.8669 83.3864 37.8322C83.3864 36.7894 83.6632 35.9031 84.2166 35.1732C84.7701 34.4352 85.5241 33.8737 86.4786 33.4887C87.4331 33.0957 88.5119 32.8992 89.7151 32.8992C90.9744 32.8992 92.0853 33.0957 93.0479 33.4887C94.0184 33.8737 94.7764 34.4553 95.3219 35.2333C95.8753 36.0033 96.1521 36.9659 96.1521 38.1209V38.8428H92.4222V38.2894C92.4222 37.5113 92.2057 36.9137 91.7725 36.4966C91.3474 36.0795 90.6776 35.871 89.7632 35.871C88.8809 35.871 88.1951 36.0314 87.7058 36.3523C87.2245 36.6731 86.9839 37.1664 86.9839 37.8322C86.9839 38.3134 87.1564 38.7225 87.5013 39.0594C87.8542 39.3963 88.3355 39.6971 88.9451 39.9618C89.5547 40.2265 90.2485 40.4912 91.0266 40.7559C92.0853 41.1248 93.0078 41.5339 93.7938 41.9831C94.5879 42.4243 95.2016 42.9817 95.6347 43.6555C96.0678 44.3213 96.2844 45.1715 96.2844 46.2062C96.2844 47.273 96.0077 48.1794 95.4542 48.9254C94.9088 49.6633 94.1468 50.2288 93.1682 50.6219C92.1896 51.0069 91.0546 51.1994 89.7632 51.1994Z"
+                            fill="#90CAF9" />
+                        <path
+                            d="M111.397 33.1639H117.714V50.9106H114.177V35.7387L110.784 50.9106H105.899L102.446 35.7146V50.9106H98.8964V33.1639H105.213L108.293 48.384L111.397 33.1639Z"
+                            fill="#90CAF9" />
+                        <path
+                            d="M119.929 50.9106L124.357 33.1398H130.265L134.668 50.9106H130.842L129.904 46.7958H124.706L123.755 50.9106H119.929ZM125.38 43.8841H129.242L127.317 35.474L125.38 43.8841Z"
+                            fill="#90CAF9" />
+                        <path
+                            d="M136.739 50.9106V33.1639H143.933C145.794 33.1639 147.182 33.589 148.096 34.4392C149.019 35.2814 149.48 36.4966 149.48 38.0848C149.48 38.9992 149.304 39.7813 148.951 40.431C148.606 41.0727 148.177 41.57 147.663 41.9229C147.158 42.2759 146.669 42.4724 146.195 42.5125C146.677 42.5446 147.138 42.6689 147.579 42.8855C148.02 43.094 148.381 43.4269 148.662 43.8841C148.943 44.3413 149.083 44.9549 149.083 45.725V49.1059C149.083 49.4989 149.111 49.8639 149.167 50.2008C149.231 50.5296 149.324 50.7662 149.444 50.9106H145.702C145.47 50.5577 145.353 49.9561 145.353 49.1059V46.1581C145.353 45.4603 145.173 44.9228 144.812 44.5459C144.451 44.1608 143.873 43.9683 143.079 43.9683H140.396V50.9106H136.739ZM143.055 36.0394H140.396V41.0807H143.127C143.849 41.0807 144.447 40.8401 144.92 40.3588C145.401 39.8776 145.642 39.2319 145.642 38.4217C145.642 37.6758 145.413 37.0942 144.956 36.6771C144.507 36.252 143.873 36.0394 143.055 36.0394Z"
+                            fill="#90CAF9" />
+                        <path d="M163.275 36.0515H158.908V50.9106H155.19V36.0515H150.834V33.1639H163.275V36.0515Z"
+                            fill="#90CAF9" />
+                        <path
+                            d="M176.919 47.3015V50.9111H165.404V33.1643H176.919V36.7738H170.289V40.2028H175.583V43.8124H170.289V47.3015H176.919Z"
+                            fill="#1E88E5" />
+                        <path
+                            d="M179.574 50.9111V33.1643H186.168C187.363 33.1643 188.458 33.3849 189.452 33.826C190.447 34.2672 191.305 34.8848 192.027 35.6789C192.749 36.473 193.307 37.4075 193.7 38.4823C194.093 39.5571 194.289 40.7282 194.289 41.9956C194.289 43.2629 194.093 44.438 193.7 45.5209C193.307 46.6037 192.749 47.5502 192.027 48.3603C191.305 49.1625 190.447 49.7881 189.452 50.2373C188.458 50.6865 187.363 50.9111 186.168 50.9111H179.574ZM185.518 36.7738H184.435V47.3015H185.518C186.208 47.3015 186.842 47.089 187.419 46.6639C188.005 46.2307 188.474 45.6171 188.827 44.823C189.18 44.0289 189.356 43.0864 189.356 41.9956C189.356 40.8967 189.18 39.9582 188.827 39.1802C188.474 38.4021 188.005 37.8085 187.419 37.3995C186.842 36.9824 186.208 36.7738 185.518 36.7738Z"
+                            fill="#1E88E5" />
+                        <path
+                            d="M210.5 44.5944C210.5 46.8002 209.866 48.4566 208.599 49.5635C207.34 50.6704 205.627 51.2239 203.461 51.2239C201.296 51.2239 199.583 50.6704 198.324 49.5635C197.073 48.4566 196.447 46.8002 196.447 44.5944V33.1643H201.308V44.7147C201.308 45.6131 201.46 46.2989 201.765 46.7722C202.078 47.2454 202.643 47.482 203.461 47.482C204.28 47.482 204.845 47.2454 205.158 46.7722C205.479 46.2989 205.639 45.6131 205.639 44.7147V33.1643H210.5V44.5944Z"
+                            fill="#1E88E5" />
+                    </svg></a>
+    
+                    <button class="navbar-toggler  btn btn-outline-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon dark"></span>
+                        </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                            {% if user.is_authenticated %}
+                            <li class="nav-item  mx-3">
+                                <a class="nav-link " aria-current="page" href="{% url 'index' %}" target="_blank">Home</a>
+                            </li>
+                            <li class="nav-item  mx-3">
+                                <a class="nav-link " href="{% url 'leaderboard'%}">Leaderboard</a>
+                            </li>
+                            {% endif %}
+                            {% if user.profile.user_type == 'student' or user.is_superuser %}                       
+                           <li class="nav-item  mx-3">
+                               <a class="nav-link " href="{% url 'all-courses'%}" target="_blank">Courses</a>
+                           </li>
+                           <li class="nav-item  mx-3">
+                               <a class="nav-link " href="{% url 'scheduale'%}" target="_blank">Scheduale</a>
+                           </li>
+                           {% endif %}
+                           {% if user.profile.user_type == 'teacher' or user.is_superuser %}                       
+                           <li class="nav-item  mx-3">
+                               <a class="nav-link " href="{% url 'my-courses'%}" target="_blank">My Courses</a>
+                           </li>
+                           {% endif %}
+                           {% if user.is_authenticated %}
+                           <li class="nav-item  mx-3">
+                               <a class="nav-link" aria-current="page" href="{% url 'contact' %}" target="_blank">Contact US</a>
+                           </li>
+                           {% endif %}    
+                        </ul>
+                        {% if user.is_authenticated %}
+                        <!-- <i class="fa-solid fa-bell pe-4 text-secondary"></i> -->
+                            <div class="dropdown  ">
+                                <button class="btn rounded-pill border-2 border-light dropdown-toggle pL-5 d-flex align-items-center " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    {% if nav_profile.picture %}
+                                    <img src="{{ nav_profile.picture.url }}" class="nav-img rounded-circle pe-1 " alt="photo" style="width: 50px;height: 50px;">
+                                    {% else %}
+                                    <img src="{% static 'images/no_avatar.jpg' %}" class="nav-img rounded-circle pe-1 " alt="photo" style="width:50px ;">
+                                    {% endif %}
+                                    <p class="mt-2">{{nav_profile}}</p>
+                                    {% if user.profile.user_type == 'student' %}
+                                    <!-- <div class="rounded-pill btn-primary px-1">{{nav_profile.points}}</div> -->
+                                    {% endif %}
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                  
+                                    {% if user.profile.user_type == 'student' or user.is_superuser %}
+                                    <li class="nav-item  mx-3">
+                                        <a class="text-decoration-none " href="{% url 'activity'%}"> <i class="fa-solid fa-building-columns"></i>My Courses</a>
+                                    </li>
+                                    {% endif %}
+                                        <li class="nav-item  mx-3">
+                                            <a class="text-decoration-none " href="{% url 'profile'%}"> <i class="fa-solid fa-user pe-2"></i>My profile</a>
+                                        </li>
+                                        <li class="nav-item  mx-3">
+                                            <a class="  text-decoration-none text-danger" href="{% url 'user_logout'%}"><i class="fa-solid fa-right-from-bracket"></i>  Log Out</a>
+                                        </li>
+                                        
+                                    </ul>
+                              </div>                       
+                        
+                        {% else %}
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="/admin/"><button class="btn btn-outline me-md-2" type="button">Admin User</button></a>
+                            <a href="{% url 'user_login' %}"><button class="btn btn-outline me-md-2" type="button">Login</button></a>
+                            <a href="{% url 'register' %}"><button class="btn btn-outline-primary" type="button">Get started</button></a>
+                        </div>
+                        {% endif %}
+    
+                </div>
+                </div>
+            </nav>
+        </header>
+
+        {% block content %}
+        {% endblock %}
+
+        {% block scripts %}
+        {% endblock %}
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous">
+</script>    
+
+    </body>
+</html>

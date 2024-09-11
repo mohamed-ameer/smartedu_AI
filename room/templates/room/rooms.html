@@ -1,0 +1,67 @@
+{% extends 'room/baseroom.html' %}
+{% block title %}Rooms | {% endblock %}
+{% block content %}
+<br>
+<br>
+<br>
+<div class="mt-5 row mx-auto">
+    <div class="col-md-3  mb-4 text-center">
+        <h1 class="pb-3 mx-auto bg-white" style="color: #0053cb;" >{{ course.title }}</h1>
+        <div class="bg-light gy-5  hover-overlay ripple shadow-2-strong rounded-5 ">            
+        {% if user.profile.user_type == 'teacher' %}
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'edit-course' course.id %}" class="text-decoration-none row"><i class="fa-solid fa-file-pen col-4 "></i>Edit course</a></h4>
+        {% else %}
+        
+        {% endif %}            
+          <h4 class="border-scandary border-bottom py-4"><a href="{% url 'modules' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-file col-4 "></i>units</a></h4>
+          {% if user.profile.user_type == 'student' %}
+          <h4 class="border-scandary border-bottom py-4"><a href="{% url 'submissions' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-chart-column col-4 "></i>Submissions</a></h4>
+          {% endif %}
+          <h4 class="border-scandary border-bottom py-4"><a href="{% url 'leaderboardcourse' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-house-chimney col-4 "></i>Leaderboard</a></h4>
+          <h4 class="border-scandary border-bottom py-4"><a href="{% url 'questions' course.id %}" class="text-decoration-none row"><i class="fa-solid fa-circle-question col-4"></i>Questions</a></h4>
+          {% if user.profile.user_type == 'teacher' %}
+          <h4 class="border-scandary border-bottom py-4"><a href="{% url 'student-submissions' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-chart-column col-4 "></i>Submissions</a></h4>
+          <h4 class="border-scandary border-bottom py-4"><a href="{% url 'student-quiz-submissions' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-chart-column col-4 "></i>QuizSubmissions</a></h4>
+          {% endif %}                        
+          <h4 class="border-scandary border-bottom py-4"><a href="{% url 'chatzoom'%}"class="text-decoration-none row"><i class="fa-solid fa-video col-4"></i>Start Meeting</a></h4>
+          <h4 class="border-scandary border-bottom py-4"><a href="{% url 'rooms' course.id%}"class="text-decoration-none row"><i class="fa-solid fa-message col-4"></i>Chat Room</a></h4>
+        </div>
+      </div>
+      <div class="col-md-8 mb-4">
+        <section class="container mt-5">
+          <div class="container">
+            <div class="row mt-5 mb-5">
+              <form method="get" class="col-11">
+                <div class="input-group">
+                  <input type="search" class="form-control rounded" placeholder="Search By Room Name" aria-label="Search" aria-describedby="search-addon" name="name" id="id_name" />
+                  <button type="submit" class="btn btn-outline-primary">search</button>
+                </div>
+              </form>
+            </div> 
+            <div class="row gap-4">
+                    {% for room in rooms %}
+                    {% if room.user == course.user %}
+                    <div class="card text-center col-lg-4 border-2 shadow" style="width: 18rem;">
+                        <div class="card-body">
+                          <h5 class="card-title text-primary">{{ room.name }}</h5>
+                          <hr>
+                          <p class="card-text">this room is created by:@{{ room.user }}</p>
+                          <a href="{% url 'room' room.slug %}" class="btn btn-primary">Join</a>
+                        </div>
+                    </div>
+                    {% endif %}    
+                    {% endfor %}
+                    {% if user.profile.user_type == 'teacher' or user.is_superuser %}
+                    <div class="mt-5" style="width: 18rem;">
+                        <div class="">
+                          <a href="{% url 'newroom' course.id %}" class="btn btn-primary btn-lg">Create NewRoom</a>
+                        </div>
+                    </div>
+                    {% endif %}
+            </div>
+        </section>
+      </div>
+</div>
+
+  
+{% endblock %}

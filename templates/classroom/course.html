@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+{% if user.profile.user_type == 'teacher' %}
+EDIT COURSE or ADD MATERIAl
+{% else %}
+{{ course.title }}
+{% endif %} 
+{% endblock %}
+{% block contentcourse %}
+<br>
+<br>
+<br>
+<br>
+    <div class="mt-5 row mx-auto">
+      <div class="col-md-3  mb-4 text-center">
+          <h1 class="pb-3 mx-auto bg-white" style="color: #0053cb;" >{{ course.title }}</h1>
+          <div class="bg-light gy-5  hover-overlay ripple shadow-2-strong rounded-5 ">            
+          {% if user.profile.user_type == 'teacher' %}
+          <h4 class="border-scandary border-bottom py-4"><a href="{% url 'edit-course' course.id %}" class="text-decoration-none row"><i class="fa-solid fa-file-pen col-4 "></i>Edit course</a></h4>
+          {% else %}
+          
+          {% endif %}            
+            <h4 class="border-scandary border-bottom py-4"><a href="{% url 'modules' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-file col-4 "></i>units</a></h4>
+            {% if user.profile.user_type == 'student' %}
+            <h4 class="border-scandary border-bottom py-4"><a href="{% url 'submissions' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-chart-column col-4 "></i>Submissions</a></h4>
+            {% endif %}
+            <h4 class="border-scandary border-bottom py-4"><a href="{% url 'leaderboardcourse' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-house-chimney col-4 "></i>Leaderboard</a></h4>
+            <h4 class="border-scandary border-bottom py-4"><a href="{% url 'questions' course.id %}" class="text-decoration-none row"><i class="fa-solid fa-circle-question col-4"></i>Questions</a></h4>
+            {% if user.profile.user_type == 'teacher' %}
+            <h4 class="border-scandary border-bottom py-4"><a href="{% url 'student-submissions' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-chart-column col-4 "></i>Submissions</a></h4>
+            <h4 class="border-scandary border-bottom py-4"><a href="{% url 'student-quiz-submissions' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-chart-column col-4 "></i>QuizSubmissions</a></h4>
+            {% endif %}                        
+            <h4 class="border-scandary border-bottom py-4"><a href="{% url 'chatzoom'%}"class="text-decoration-none row"><i class="fa-solid fa-video col-4"></i>Start Meeting</a></h4>
+            <h4 class="border-scandary border-bottom py-4"><a href="{% url 'rooms' course.id%}"class="text-decoration-none row"><i class="fa-solid fa-message col-4"></i>Chat Room</a></h4>
+          </div>
+        </div>
+        <div class="col-md-8 mb-4">
+          <section class="container ">
+          <div class="card col-6 mx-auto mt-5">
+            <img src="{{ course.picture.url }}"id="imgCard" class="img-fluid" style=" height: 300px;" />            
+          <div class="card-body">
+            <h3 class="card-title text-center" style="color: #0053cb;">{{ course.title }}</h3>
+            <p class="card-text text-muted text-center"><small>
+              {{ course.description }}</small>
+            </p>
+            <div class="row text-secondary mx-5 text-center">
+            <p class="col"><strong>{{ course.category }}</strong></p>
+            <p class="col"><strong>{{ course.enrolled.count }} students</strong></p>
+        </div>
+          </div>
+          {% if user.profile.user_type == 'teacher' %}
+          <a href="{% url 'delete-course-warning' course.id %}" class="col-5 mx-auto btn btn-outline-danger mb-2">Delete The Course</a>
+          {% endif %}
+        </div>
+        </section>
+        </div>
+    </div>
+{% endblock %}

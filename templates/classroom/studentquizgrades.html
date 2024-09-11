@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ course.title }}/Grade{% endblock %}
+{%block scripttag%} <script src="{% static 'js/table2excel.js' %}"></script> {%endblock%}
+{% block contentcourse %}
+<br>
+<br>
+<br>
+<br>
+<div class="mt-5 row mx-auto">
+  <div class="col-md-3  mb-4 text-center">
+      <h1 class="pb-3 mx-auto bg-white" style="color: #0053cb;" >{{ course.title }}</h1>
+      <div class="bg-light gy-5  hover-overlay ripple shadow-2-strong rounded-5 ">            
+      {% if user.profile.user_type == 'teacher' %}
+      <h4 class="border-scandary border-bottom py-4"><a href="{% url 'edit-course' course.id %}" class="text-decoration-none row"><i class="fa-solid fa-file-pen col-4 "></i>Edit course</a></h4>
+      {% else %}
+      
+      {% endif %}            
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'modules' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-file col-4 "></i>units</a></h4>
+        {% if user.profile.user_type == 'student' %}
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'submissions' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-chart-column col-4 "></i>Submissions</a></h4>
+        {% endif %}
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'leaderboardcourse' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-house-chimney col-4 "></i>Leaderboard</a></h4>
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'questions' course.id %}" class="text-decoration-none row"><i class="fa-solid fa-circle-question col-4"></i>Questions</a></h4>
+        {% if user.profile.user_type == 'teacher' %}
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'student-submissions' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-chart-column col-4 "></i>Submissions</a></h4>
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'student-quiz-submissions' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-chart-column col-4 "></i>QuizSubmissions</a></h4>
+        {% endif %}
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'chatzoom'%}"class="text-decoration-none row"><i class="fa-solid fa-video col-4"></i>Start Meeting</a></h4>
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'rooms' course.id%}"class="text-decoration-none row"><i class="fa-solid fa-message col-4"></i>Chat Room</a></h4>
+                    
+      </div>
+    </div>
+<div class="col-md-8 mb-4">
+<div class="container mt-5 pt-3 row">
+  <h2 class="py-3 mx-auto ms-3 col-7" style="color: #0053cb;" >QuizSubmissions</h2>
+<div class="mx-auto d-flex flex-sm-wrap row gx-5 mt-3">                            
+<div class="  mx-3 row border  border-light shadow bg-white rounded text-center">
+<div class="table-responsive">
+<button id="downloadexcel" style="background-color:#23824e;  padding: 15px 32px;  color: white;border: none;border-radius: 12px;box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);"><i class="fa-solid fa-file-excel"></i>   Export To Excel</button>
+<br><br>
+  <table class="table table-hover table-bordered table-condensed" id="example-table">
+  <thead class="">
+    <tr class="table-white">
+      <th scope="col">Student Name</th>
+      <th scope="col">Student username</th>
+      <th scope="col">Student ID</th>
+      <th scope="col">Quiz</th>
+      <th scope="col">score</th>
+    </tr>
+  </thead>
+  <tbody class="table-light">
+    {% for attempt in attempts %}
+    {% if attempt.quiz.user.username == course.user.username %}    
+    <tr class="">
+      <td>{{ attempt.user.get_full_name }}</td>
+      <td>@{{ attempt.user.username }}</td>
+      <td>{{ attempt.user.profile.college_id }}</td>
+      <td>{{ attempt.quiz.title }}</td>
+      <td>{{ attempt.score }}</td>
+    </tr>
+  {% endif %}
+  {% endfor %}
+</tbody>
+</table>        
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<script>
+  document.getElementById('downloadexcel').addEventListener('click',function(){
+    var table2excel = new Table2Excel();
+    table2excel.export(document.querySelectorAll("#example-table"));
+  });
+</script>
+{% endblock %}

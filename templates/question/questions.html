@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% load bootstrap4 %}
+{% block title %} {{ course.title }}/Questions {% endblock %}
+{% block contentcourse %}
+<br>
+<br>
+<br>
+<br>
+<div class="mt-5 row mx-auto">
+  <div class="col-md-3  mb-4 text-center">
+      <h1 class="pb-3 mx-auto bg-white" style="color: #0053cb;" >{{ course.title }}</h1>
+      <div class="bg-light gy-5  hover-overlay ripple shadow-2-strong rounded-5 ">            
+      {% if user.profile.user_type == 'teacher' %}
+      <h4 class="border-scandary border-bottom py-4"><a href="{% url 'edit-course' course.id %}" class="text-decoration-none row"><i class="fa-solid fa-file-pen col-4 "></i>Edit course</a></h4>
+      {% else %}
+      
+      {% endif %}            
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'modules' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-file col-4 "></i>units</a></h4>
+        {% if user.profile.user_type == 'student' %}
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'submissions' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-chart-column col-4 "></i>Submissions</a></h4>
+        {% endif %}
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'leaderboardcourse' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-house-chimney col-4 "></i>Leaderboard</a></h4>
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'questions' course.id %}" class="text-decoration-none row"><i class="fa-solid fa-circle-question col-4"></i>Questions</a></h4>
+        {% if user.profile.user_type == 'teacher' %}
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'student-submissions' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-chart-column col-4 "></i>Submissions</a></h4>
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'student-quiz-submissions' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-chart-column col-4 "></i>QuizSubmissions</a></h4>
+        {% endif %}  
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'chatzoom'%}"class="text-decoration-none row"><i class="fa-solid fa-video col-4"></i>Start Meeting</a></h4>
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'rooms' course.id%}"class="text-decoration-none row"><i class="fa-solid fa-message col-4"></i>Chat Room</a></h4>
+                  
+      </div>
+    </div>
+  <div class="col-md-8 mb-4">
+        <section class="container ">
+          <div class=" gx-5 unit">
+            <div class="mx-auto d-flex flex-sm-wrap row gx-5 border-scandary  border-bottom mb-5">                
+            <h2 class=" col-8 pb-3" style="color: #0053cb;">Add Question:   </h2>
+            <a href="{% url 'new-student-question' course.id %}" class="col-1 btn btn-primary btn-floating rounded-circle mb-3 mx-3 p-3"><i class="fa-solid fa-plus"></i></a>
+            {% if user.profile.user_type == 'teacher'%}
+            {% endif %}
+            </div>   
+            <!-- start -->
+            <h2 class=" col-8 pb-3" style="color: #0053cb;">The Questions:   </h2>
+
+            <div class="mx-auto pb-2 gx-5 border-scandary  border rounded">
+                <div>
+                  <ul class="list-group">
+                  {% for question in questions %}
+                  <li class="list-group-item">
+                  {% if question.user.profile.picture %}
+                    <img src="{{ question.user.profile.picture.url }}" class="nav-img rounded-circle pe-1 " alt="photo" style="width: 50px;height: 50px;">
+                  {% else %}
+                    <img src="{% static 'images/no_avatar.jpg' %}" class="nav-img rounded-circle pe-1 " alt="photo" style="width: 50px;height: 50px;">
+                  {% endif %} 
+                  <span class="title"><b>{{ question.user.get_full_name }}</b>@{{ question.user.username }}</span>
+                  <a href="{% url 'question-detail' course.id question.id %}"><h5><b>{{ question.title }}</b></h5></a>
+                  <p>{{ question.body | safe | truncatechars:110 }}</p>
+                  <div class="secondary-content">
+                    <h5>{{ question.get_answers_count }} Answers</h5>
+                    <h5>
+                      {% if question.has_accepted_answer == True %}
+                        <span class="new badge green" data-badge-caption="Answered"></span>
+                      {% else %}
+                        <span class="new badge orange" data-badge-caption="Unanswered"></span>
+                      {% endif %}                      
+                    </h5>
+                  </div>
+                  </li>  
+                  {% endfor %}
+                  </ul>
+                  <div class="col s12 m12 center-align">
+                    {% if questions.has_previous %}
+                      <a href="?page={{ questions.previous_page_number }}" class="btn"><i class="material-icons">arrow_back</i>Back</a>
+                    {% endif %}
+              
+                    {% if questions.has_next %}
+                      <a href="?page={{ questions.next_page_number }}" class="btn"><i class="material-icons">add</i>Load more</a>
+                    {% endif %}  
+              
+                  </div>
+              
+                </div>    
+            </div>
+
+            <!-- end -->
+         </div>
+        </section>
+      </div>
+    </div>
+{% endblock %}

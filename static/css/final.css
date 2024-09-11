@@ -1,0 +1,21 @@
+.nav-item > a{
+  transition: 0.3s;
+}
+.nav-item > a:hover, .nav-item > a:focus {
+    /* background-color: black; */
+    /* color: #fff; */
+    border-bottom: 1px solid #0053cb;
+    transform: translateY(5px);
+  }
+
+  .Mpointer:hover, .Mpointer:focus {
+    color: #0053cb;
+    cursor: pointer;
+  }
+  .Scehdulediv:hover, .Scehdulediv:focus {
+    color: #0053cb;
+    cursor: pointer;
+  }
+  #demo{
+  color: red;
+  }

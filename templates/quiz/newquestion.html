@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap4 %}
+{% block title %} Add Question {% endblock %}         
+{% block contentcourse %}
+<br>
+<br>
+<br>
+<br>
+<div class="mt-5 row mx-auto">
+  <div class="col-md-3  mb-4 text-center">
+      <h1 class="pb-3 mx-auto bg-white" style="color: #0053cb;" >{{ course.title }}</h1>
+      <div class="bg-light gy-5  hover-overlay ripple shadow-2-strong rounded-5 ">            
+      {% if user.profile.user_type == 'teacher' %}
+      <h4 class="border-scandary border-bottom py-4"><a href="{% url 'edit-course' course.id %}" class="text-decoration-none row"><i class="fa-solid fa-file-pen col-4 "></i>Edit course</a></h4>
+      {% else %}
+      
+      {% endif %}            
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'modules' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-file col-4 "></i>units</a></h4>
+        {% if user.profile.user_type == 'student' %}
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'submissions' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-chart-column col-4 "></i>Submissions</a></h4>
+        {% endif %}
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'leaderboardcourse' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-house-chimney col-4 "></i>Leaderboard</a></h4>
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'questions' course.id %}" class="text-decoration-none row"><i class="fa-solid fa-circle-question col-4"></i>Questions</a></h4>
+        {% if user.profile.user_type == 'teacher' %}
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'student-submissions' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-chart-column col-4 "></i>Submissions</a></h4>
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'student-quiz-submissions' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-chart-column col-4 "></i>QuizSubmissions</a></h4>
+        {% endif %}   
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'chatzoom'%}"class="text-decoration-none row"><i class="fa-solid fa-video col-4"></i>Start Meeting</a></h4>
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'rooms' course.id%}"class="text-decoration-none row"><i class="fa-solid fa-message col-4"></i>Chat Room</a></h4>
+                 
+      </div>
+    </div>
+  <div class="col-md-8 mb-4">
+        <section class="container ">
+          <h3 class="title is-3" style="color: #0053cb;">Let's create a new Question!</h3>
+          <div class="apply_job_form white-bg">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                <div class="input-field col s9">
+                  <input type="text" name="answer_text" id="id_answer_text" class="validate">
+                  <label for="answer_text">Answer 1</label>
+                </div>
+      
+                <div class="input-field col s3">
+                  <select id="id_is_correct" name="is_correct">
+                    <option value="" disabled selected>Choose yes or no</option>
+                    <option value="True">Yes</option>
+                    <option value="False">No</option>
+                  </select>
+                  <label>Is this the correct answer ?</label>
+                </div>
+      
+                <div class="input-field col s9">
+                  <input type="text" name="answer_text" id="id_answer_text" class="validate">
+                  <label for="answer_text">Answer 2</label>
+                </div>
+      
+                <div class="input-field col s3">
+                  <select id="id_is_correct" name="is_correct">
+                    <option value="" disabled selected>Choose yes or no</option>
+                    <option value="True">Yes</option>
+                    <option value="False">No</option>
+                  </select>
+                  <label>Is this the correct answer ?</label>
+                </div>
+      
+                <div class="input-field col s9">
+                  <input type="text" name="answer_text" id="id_answer_text" class="validate">
+                  <label for="answer_text">Answer 3</label>
+                </div>
+      
+                <div class="input-field col s3">
+                  <select id="id_is_correct" name="is_correct">
+                    <option value="" disabled selected>Choose yes or no</option>
+                    <option value="True">Yes</option>
+                    <option value="False">No</option>
+                  </select>
+                  <label>Is this the correct answer ?</label>
+                </div>
+      
+                <div class="input-field col s9">
+                  <input type="text" name="answer_text" id="id_answer_text" class="validate">
+                  <label for="answer_text">Answer 4</label>
+                </div>
+      
+                <div class="input-field col s3">
+                  <select id="id_is_correct" name="is_correct">
+                    <option value="" disabled selected>Choose yes or no</option>
+                    <option value="True">Yes</option>
+                    <option value="False">No</option>
+                  </select>
+                  <label>Is this the correct answer ?</label>
+                </div>
+      
+                <div class="mt-3">
+                  <button class="btn btn-primary" type="submit" name="button"><i class="fa-solid fa-circle-plus"></i>Save this question and Add another one</button>
+                  <a class="btn btn-secondary" href="{% url 'modules' course.id %}">Finish</a>
+                </div>
+            </form>
+          </div>          
+        </section>
+      </div>
+    </div>
+<hr>
+{% endblock %}

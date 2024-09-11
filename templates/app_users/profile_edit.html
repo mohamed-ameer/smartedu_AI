@@ -1,0 +1,71 @@
+
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load static %}
+{% block title %} Edit Profile {% endblock %}
+{% block content %} 
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="container">
+    <h1>Edit Profile</h1>
+  	<hr>
+	<div class="row">
+      <!-- left column -->
+      <div class="col-md-3">
+
+      </div>
+      
+      <!-- edit form column -->
+      <div class="col-md-9 personal-info">
+        <h3>Personal info</h3>
+        <div class="apply_job_form white-bg">
+            <h4>Edit Profile</h4>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% bootstrap_form userform %}
+                {% bootstrap_form profileform %}
+
+                <div class="mt-3">
+                  <button class="btn btn-primary" type="submit" name="button">Save</button>
+                  <a class="btn btn-secondary" href="{% url 'profile' %}">Cancel</a>
+                </div>
+            </form>
+        </div>
+        
+      </div>
+  </div>
+</div>
+<hr>
+<div class="container">
+    <h1>Change password</h1>
+  	<hr>
+	<div class="row">
+      <!-- left column -->
+      <div class="col-md-3">
+
+      </div>
+      
+      <!-- edit form column -->
+      <div class="col-md-9 personal-info">
+        <div class="apply_job_form white-bg">
+          <a href="{% url 'change_password' %}"><button class="btn btn-primary" type="button">Change Password</button></a>
+        </div>
+      </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+
+
+
+
+ 

@@ -1,0 +1,85 @@
+{% extends 'base.html'  %}
+{% load static %}
+{%block title %}Home{% endblock%}
+
+{% block content %}
+   
+<section class="container mt-5 pt-5">
+    <div class=" row gx-5 mt-5 pt-5">
+        <div class="col "> 
+            <img src="{% static 'images/Logo.png' %}"alt="logo">
+         </div>
+        <div class="col  mt-5 ">
+            <h1 class="fw-bolder pt-5 my-5"><span class="text-primary">Best</span> online learning experience.</h1>  
+            <p class="fw-lighter text-muted">No more frequent flaws, no boundaries between the teacher and— students with a complete platform that works on all
+            devices, you can't miss a thing!</p> 
+            <button type="button" class="Read-btn btn btn-outline-primary my-3">Read more about us</button>
+        </div>
+        
+    </div>
+</section>
+<section class="container mx-auto">
+    <div class=" mx-auto row gx-2 my-5 py-5 text-center">
+        <div class="col-lg card border-0 shadow  p-3 mero">
+            
+                <img  class="card-img-top"  src="{% static 'images/Online earning-bro.png' %}" alt="photo">
+                <div class="card-body pb-5">
+                  <h5 class="card-title text-center text-secondary">Perfect community</h5>
+                  <p class="card-text text-center text-muted">We worked for in order to reduce the gap between Student and the teacher.</p>
+                </div>
+                </div>
+        <div class="col-lg card border-0 shadow mx-3 p-3 mero">
+            
+                <img  class="card-img-top"  src="{% static 'images/Setup-cuate.png' %}" alt="photo">
+                <div class="card-body pb-5">
+                  <h5 class="card-title text-center text-warning">Organized content</h5>
+                  <p class="card-text text-center text-muted">Smart-edu is smart enough to keep students focused on what they have to do.</p>
+                </div>
+                </div>
+        <div class="col-lg card border-0 shadow  p-3 mero">
+            
+                <img  class="card-img-top"  src="{% static 'images/Artificial intelligence-bro.png' %}" alt="photo">
+                <div class="card-body pb-5">
+                  <h5 class="card-title text-center text-info">Student Performance</h5>
+                  <p class="card-text text-center text-muted">Using the latest AI techniques, we help the teacher evaluate students with minimal effort.</p>
+                </div>
+                </div>
+        
+           
+    </div>
+    <div class=" row  my-5 pb-5 ">
+        <div class="col">
+            <img style="width:100%;width: 550px;height: 550px;" src="{% static 'images/4.png' %}" alt="photo">
+        </div>
+        <div class="col pt-5 mt-5">
+            <div class="mt-5 pt-5 ">
+                <h1>We’re <span class="text-primary">available</span> on all platforms</h1>
+                <p class="fw-lighter text-muted py-3 pe-5 me-5">
+                    No difference in the experience between mobile and website, we have worked hard to make this possible.
+                </p>
+                <div class=" d-flex justify-content-evenly row">
+                <button type="button" class="mx-2 col btn btn-outline-dark">Get it via app store</button>
+                <button type="button" class="me-5 col btn btn-dark">Get it via google play</button>
+            </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+		<!-- About US -->
+		<section class="container-fluid bg-light py-4 mt-5 border-top border-bottom">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-5">
+							<h1 class="mb-4 section-heading" style="color: #0053cb;">About Us</h1>
+							<p class="lh-base">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1550s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+					</div>
+					<div class="col-md-6 offset-1">
+						
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- End Testimonials -->
+
+{%endblock%}

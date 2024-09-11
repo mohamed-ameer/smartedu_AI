@@ -1,0 +1,84 @@
+{% extends 'base.html'  %}
+{% load static %}
+{%block title %}leaderboard{% endblock%}
+{% block content %}
+ <br> 
+ <br> 
+ <section class="container position-relative my-5 pt-5 pb-5 ">
+   <div aria-label="breadcrumb mb-5">
+     <h1 class="mb-5 pt-2">Leaderboard</h1> 
+      </div>
+   <!-- copy -->
+   <div class="container">
+    <div class="row mt-5">
+      <form method="get" class="col-11">
+        <div class="input-group">
+          <input type="search" class="form-control rounded" placeholder="Search By ID" aria-label="Search" aria-describedby="search-addon" name="college_id" id="id_college_id" />
+          <button type="submit" class="btn btn-outline-primary">search</button>
+        </div>
+      </form>
+    </div> 
+    <div class="row mt-5">
+      <div class="col-11">
+        <table id="studentPoints" class="table table-bordered table-condensed table-striped table-hover text-center align-middle">
+          <thead class="table-white text-secondary">
+            <tr>
+              <th scope="col"></th>
+              <th scope="col"></th>
+              <th scope="col">@Username</th>
+              <th scope="col">Full Name</th>
+              <th scope="col">Student ID</th>
+              <th scope="col">Points</th>
+            </tr>
+          </thead>
+          <tbody class="table-light">
+          {% for profile in profiles %}
+          {% if profile.user_type == 'student' %}
+            <tr class="">
+              <th scope="row">
+                {{ forloop.counter }}
+              </th>
+              <td class="firstName">
+                {% if profile.picture %}
+                <img src="{{ profile.picture.url}}" class="rounded-circle" alt="photo" style="width: 100px;height: 100px;">
+                {% else %}
+                <img src="{% static 'images/no_avatar.jpg' %}" class="rounded-circle" alt="photo" style="width:100px ;">
+                {% endif %}
+              </td>
+              <td class="firstName">
+              {% if forloop.counter <= 10 %}
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-award" viewBox="0 0 16 16">
+                <path d="M9.669.864 8 0 6.331.864l-1.858.282-.842 1.68-1.337 1.32L2.6 6l-.306 1.854 1.337 1.32.842 1.68 1.858.282L8 12l1.669-.864 1.858-.282.842-1.68 1.337-1.32L13.4 6l.306-1.854-1.337-1.32-.842-1.68L9.669.864zm1.196 1.193.684 1.365 1.086 1.072L12.387 6l.248 1.506-1.086 1.072-.684 1.365-1.51.229L8 10.874l-1.355-.702-1.51-.229-.684-1.365-1.086-1.072L3.614 6l-.25-1.506 1.087-1.072.684-1.365 1.51-.229L8 1.126l1.356.702 1.509.229z"/>
+                <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1 4 11.794z"/>
+              </svg>
+              <h6 style="color:#0053cb;">@{{profile.user.username }}</h6>
+              {% else %}
+              @{{profile.user.username }}
+              {% endif %}
+              </td>
+              <td class="firstName">
+              {{profile.user.get_full_name }}
+              </td>
+              <td class="lastName">
+                {{ profile.college_id}}
+              </td>
+              <td class="points">
+                {{profile.points}}
+              </td>
+            </tr>
+          {% endif %}
+          {% endfor %}
+        </tbody>
+        </table>
+      </div>
+      <div class="col-1">
+        <a href="{% url 'leaderboardreverse' %}" class="btn btn-primary"><i class="fa-solid fa-up-long"></i><i class="fa-solid fa-down-long"></i></a>
+      </div>
+    </div>
+   </div>
+    <!--  -->
+    </section>
+    {% endblock %}
+    {% block javascript %}
+    <script type="text/javascript" src="Bootstrap/bootstrap-5.0.2-dist/js/bootstrap.js"></script>
+    {% endblock %}

@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Courses {% endblock %}
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="container mt-5 pt-5">
+  <section class="">
+    <!--  -->
+    <div class="container">
+      <div class="row">
+            <div id="filter-panel" class="collapse filter-panel bg-light">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form method="get" class="form-inline" role="form">
+                          <br>
+                          <div class="form-group h6">
+                          {{myFilter.form}}
+                          </div>
+                          <br>
+                          <div class="form-group">    
+                            <button type="submit" class="btn btn-primary">
+                              <i class="fas fa-search"></i>   Search
+                            </button> 
+                          </div> 
+                          <br> 
+                      </form>
+                    </div>
+                </div>
+            </div>    
+            <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#filter-panel">
+              <i class="fa-solid fa-gear"></i>  Advanced Search
+            </button>
+      </div>
+    </div>
+    <!--  -->
+  </section>          
+  <hr class="my-5" />
+  <section class="text-center">
+    <h4 class="mb-5" style="color: #0053cb;"><strong>Courses</strong></h4>
+    <div class="row">
+      {% for course in courses %}
+      <div class="col-lg-4 col-md-12 mb-4">
+        <div class="card">
+            <img src="{{ course.picture.url }}"id="imgCard" class="img-fluid" style=" height: 300px; ;" />            
+          <div class="card-body">
+            <h5 class="card-title " style="color: #0053cb;">{{ course.title }}</h5>
+            <p class="card-text text-muted "><small>
+              {{ course.description }}</small>
+            </p>
+            <div class="row text-secondary mx-5">
+            <p class="col"><strong>{{ course.category }}</strong></p>
+            <p class="col"><strong>{{ course.enrolled.count }}students</strong></p>
+        </div>
+            <!-- enroll -->
+            {% if user in course.enrolled.all %}
+            <a href="{% url 'course' course.id %}" class="btn btn-outline-primary ">Go To Course</a>
+            {% else %}
+            <form action="{% url 'enroll' course.id %}" method="POST">
+              {% csrf_token %}
+              <input type="text" name="code" placeholder="Enter the secret code of the course">
+              <input type="submit" value="Enroll">
+            </form>
+            <!-- <a href="{% url 'enroll' course.id %}" class="btn btn-outline-primary ">Enroll</a> -->
+            {% endif %}
+          </div>
+        </div>            
+      </div>
+      {% endfor %}      
+    </div>
+  </section>
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+<script src="js/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function(){
+    $(".card-body").hover(function(){
+      $(this).css("background-color", "#adb5bd")
+      $('#imgCard').css("background-color", "#adb5bd");
+    }, function(){
+ $(this).css("background-color", "white")
+ $('#imgCard').css('opacity') = '1';
+    });
+  });
+</script>
+{% endblock %}

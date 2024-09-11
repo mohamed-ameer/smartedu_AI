@@ -1,0 +1,154 @@
+{% extends 'baseregister.html' %}
+{% load bootstrap4 %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}Register{% endblock %}
+{%block css%}{%endblock%}
+{% block content %}
+
+<!-- start eman -->
+<div class="row mx-auto">
+    <!-- design -->
+    <div class=" col-lg-6  text-white " style="background-color: #0053cb;">
+        <div class="container" >
+            <!--margin: 64px;-->
+            <h2 class="text-center pt-5 mx-5 "><span class="fw-bold">SmartEDU is the best </span>online learning
+                experience</h2>
+            <div class="container">
+                <div class="carousel-slide" data-bs-ride="carousel">
+                    <div class="container">
+                        <div class="carousel-indicators" style="top: 684px;position: relative;">
+                            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active"
+                                aria-current="true" aria-label="Slide 1"></button>
+                            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1"
+                                aria-label="Slide 2"></button>
+                            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2"
+                                aria-label="Slide 3"></button>
+                        </div>
+                    </div>
+                    <div class="carousel-inner py-3 text-center mx-auto mb-5">
+                        <div class="carousel-item active" data-bs-interval="1000">
+                            <img src="{% static 'images/Auth1.png'%}" alt="photo" style="width:40%; ">
+                            <p class="text-center pb-4">No more frequent flaws, no boundaries between the
+                                teacher and his students.</p>
+                        </div>
+                        <div class="carousel-item" data-bs-interval="1000">
+                            <img src="{% static 'images/Auth2.png'%}" alt="photo" style="width:40%; ">
+                            <p class="text-center ">“You will never walk alone” is what we worked for
+                                in order to reduce the gap between student and the
+                                teacher.</p>
+                        </div>
+                        <div class="carousel-item" data-bs-interval="1000">
+                            <img src="{% static 'images/Auth3.png'%}" alt="photo" style="width:40%; ">
+                            <p class="text-center  ">No matter how complex your course content is,
+                                Smart-edu is smart enough to keep students focused on what
+                                they have to
+                                do.</p>
+                        </div>
+    
+                    </div>
+    
+                </div>
+                <div class="text-center mx-auto py-5 position-relative top-100 start-50 translate-middle mt-5">
+                    <p class="mb-4 mt-5 " >Already member?</p>
+                    <a href="{% url 'user_login' %}" class="text-decoration-none "><button   type="button" class="bg-transparent btn btn-outline-light px-5 mx-auto">Login</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-6" >
+    <div class=" container">
+        <h3 class="text-primary pt-5">Create a new account</h3>  
+        <p class="text-muted ">to start using SmartEDU</p>
+        <hr>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ user_form|crispy }}
+            {{ profile_form|crispy }}  
+            {{captcha}}          
+            <!-- <div class=" border border-2 border-light p-3 rounded rounded-5 my-3 form-check2 ">           
+                <input type="checkbox" class="form-check-input" id="#"required>
+                <label class=" opacity-75 form-check-label text-primary" for="#">You have read and agree our <a href="#" class=" fw-bold text-decoration-none"style="color: #0058e6;" >Privacy Policy</a> </label>
+                <br>
+                <br>
+                <input type="checkbox" class=" form-check-input" id="#"required>
+                <label class="text-muted form-check-label text-center=" for="#">I am not a Robot  </label>       
+            </div> -->
+            <div class="row justify-content-center">
+            <input type="submit" value="Register" class="btn bg-primary text-white btn-lg mt-3">
+            </div>
+          </form>
+    </div>
+</div>
+</div>
+<!-- endeman -->
+{% block jshighperiority %}
+<script>
+$(document).ready(function() {
+    $("#hint_id_username").css("display", "none");
+    $("#hint_id_password1").css("display", "none");
+    $("#hint_id_password2").css("display", "none");
+   } );
+
+   var xuser = document.getElementById("id_username");
+xuser.addEventListener("focus", myFocususer, true);
+xuser.addEventListener("blur", myBluruser, true);
+
+function myFocususer() {
+    $("#hint_id_username").css("display", "block");
+}
+function myBluruser() {
+    $("#hint_id_username").css("display", "none");
+}
+
+
+   var xpass1 = document.getElementById("id_password1");
+xpass1.addEventListener("focus", myFocusFunction, true);
+xpass1.addEventListener("blur", myBlurFunction, true);
+
+function myFocusFunction() {
+    $("#hint_id_password1").css("display", "block");
+}
+function myBlurFunction() {
+    $("#hint_id_password1").css("display", "none");
+}
+   var xpass2 = document.getElementById("id_password2");
+xpass2.addEventListener("focus", myFocuspass2, true);
+xpass2.addEventListener("blur", myBlurpass2, true);
+
+function myFocuspass2() {
+    $("#hint_id_password2").css("display", "block");
+}
+function myBlurpass2() {
+    $("#hint_id_password2").css("display", "none");
+}
+
+</script>
+<!-- <script>
+function FocusFunction() {
+    
+    $("#hint_id_password1").css("display", "block");
+   } 
+   $(document).ready(function() {
+    $("#hint_id_password1").css("display", "none");
+   } );
+   </script> -->
+{% endblock %}
+<!-- 
+  {% if registered %}
+    <h1>Thank you for registering</h1>
+  {% else %}
+      <h3>Fill the form: </h3>
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ user_form|crispy }}
+        {{ profile_form|crispy }}
+        <div class="row justify-content-center">
+        <div class="col-md-6">
+        <input type="submit" value="Register" class="btn btn-primary btn-block">
+        </div>
+        </div>
+      </form>
+  {% endif %} -->
+{%endblock%}

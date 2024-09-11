@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} {{ course.title }}/Grade {% endblock %}
+{% block contentcourse %}
+<br>
+<br>
+<br>
+<br>
+<div class="mt-5 row mx-auto">
+  <div class="col-md-3  mb-4 text-center">
+      <h1 class="pb-3 mx-auto bg-white" style="color: #0053cb;" >{{ course.title }}</h1>
+      <div class="bg-light gy-5  hover-overlay ripple shadow-2-strong rounded-5 ">            
+      {% if user.profile.user_type == 'teacher' %}
+      <h4 class="border-scandary border-bottom py-4"><a href="{% url 'edit-course' course.id %}" class="text-decoration-none row"><i class="fa-solid fa-file-pen col-4 "></i>Edit course</a></h4>
+      {% else %}
+      
+      {% endif %}            
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'modules' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-file col-4 "></i>units</a></h4>
+        {% if user.profile.user_type == 'student' %}
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'submissions' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-chart-column col-4 "></i>Submissions</a></h4>
+        {% endif %}
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'leaderboardcourse' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-house-chimney col-4 "></i>Leaderboard</a></h4>
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'questions' course.id %}" class="text-decoration-none row"><i class="fa-solid fa-circle-question col-4"></i>Questions</a></h4>
+        {% if user.profile.user_type == 'teacher' %}
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'student-submissions' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-chart-column col-4 "></i>Submissions</a></h4>
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'student-quiz-submissions' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-chart-column col-4 "></i>QuizSubmissions</a></h4>
+        {% endif %} 
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'chatzoom'%}"class="text-decoration-none row"><i class="fa-solid fa-video col-4"></i>Start Meeting</a></h4>
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'rooms' course.id%}"class="text-decoration-none row"><i class="fa-solid fa-message col-4"></i>Chat Room</a></h4>
+                   
+      </div>
+    </div>
+  <div class="col-md-8 mt-5 pt-4 mx-auto">
+          <div class=" my-3 mx-3 row border  border-light shadow pt-2 px-1  bg-white rounded text-center">
+          <table class="table table-hover">
+            <tr class="table-light">
+              <th>Student Name</th>
+              <td>{{ grade.submission.user.get_full_name }}</td>
+            </tr>
+            <tr class="table-light">
+              <th>Student Username</th>
+              <td>@{{ grade.submission.user.username }}</td>
+            </tr>
+            <tr class="table-light">
+              <th>Student College_ID</th>
+              <td>{{ grade.submission.user.profile.college_id }}</td>
+            </tr>
+            <tr class="table-light">
+              <th>Student E_mail</th>
+              <td>{{ grade.submission.user.email }}</td>
+            </tr>
+            <tr class="table-light">
+              <th>Student Phone</th>
+              <td>{{ grade.submission.user.profile.phone }}</td>
+            </tr>
+            <tr class="table-light">
+              <th>Student Univeristy</th>
+              <td>{{ grade.submission.user.profile.univeristy_name }}</td>
+            </tr>
+            <tr class="table-light">
+              <th>Student Major</th>
+              <td>{{ grade.submission.user.profile.major_types }}</td>
+            </tr>
+            <tr class="table-light">
+              <th>Student Assignment_File</th>
+              <td>
+                {{ grade.submission.get_file_name }}
+                <a href="{{ grade.submission.file.url }}"download><i class="fa-solid fa-cloud-arrow-down"></i>Download</a>
+              </td>
+            </tr>
+            <tr class="table-light">
+              <th>Student comment on assignment</th>
+              <td>{{ grade.submission.comment }}</td>
+            </tr>
+          </table>
+          </div>
+      <!--  -->
+        <div class="col-11 mt-3 mx-auto">
+        <form method="post" action="{% url 'grade-submission' course.id grade.id %}" role="form" class="row">
+          {% csrf_token %}
+          <h4>Assignment maximum points: <b>{{ grade.submission.assignment.points }}</b></h4>      
+          <div class="input-field col-4  mt-2">
+            <i class="fa-solid fa-pen"></i>
+            <input id="icon_prefix" type="text" name="points" class="validate">
+            <label for="icon_prefix">Points</label>
+          </div>      
+          <div class="col-2">
+            <button class="btn btn-primary" type="submit">Grade</button>
+          </div>
+        </form>        
+        </div>
+      </div>
+    </div>
+{% endblock %}

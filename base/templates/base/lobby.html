@@ -1,0 +1,164 @@
+{% extends 'base/main.html' %}
+{% load static %}
+{% block content %}
+{% if user.is_authenticated %}
+<main>
+    <section id="form-container">
+
+        <img id="logo" src="{% static 'images/chat-icon.png' %}"/>
+
+        <div id="welcome-message">
+            <h1>SmartEDUChat</h1>
+            <p>A group video calling platform made just for you!</p>
+        </div>
+
+        <form id="form">
+            <div class="field-wrapper">
+
+                <div class="form-field">
+                    <label>Room:</label>
+                    <input name="room" placeholder="Enter a room name..."  style="text-transform:uppercase"/>
+                </div>
+
+                <div class="form-field">
+                    <label>Name:</label>
+                    <input name="name" placeholder="Enter your name..."  style="text-transform:uppercase"/>
+                </div>
+
+                <div class="form-field">
+                    <input type="submit" value="Join Stream" />
+                </div>
+            </div>
+        </form>
+    </section>
+</main>
+
+<script>
+    let form = document.getElementById('form')
+
+    let handleSubmit = async (e) => {
+        e.preventDefault()
+        let room = e.target.room.value.toUpperCase()
+        let name = e.target.name.value
+
+        let response = await fetch(`/get_token/?channel=${room}`)
+        let data = await response.json()
+
+        let UID = data.uid
+        let token = data.token
+
+        sessionStorage.setItem('UID', UID)
+        sessionStorage.setItem('token', token)
+        sessionStorage.setItem('room', room)
+        sessionStorage.setItem('name', name)
+
+        window.open('/room/', '_self')
+    }
+
+
+
+    form.addEventListener('submit', handleSubmit)
+</script>
+
+
+
+
+{% else %}
+
+
+
+
+<section class="container mt-5 pt-5">
+    <div class=" row gx-5 mt-5 pt-5">
+        <div class="col "> 
+            <img src="{% static 'images/Logo.png' %}"alt="logo">
+         </div>
+        <div class="col  mt-5 ">
+            <h1 class="fw-bolder pt-5 my-5"><span class="text-primary">Best</span> online learning experience.</h1>  
+            <p class="fw-lighter text-muted">No more frequent flaws, no boundaries between the teacher and— students with a complete platform that works on all
+            devices, you can't miss a thing!</p> 
+            <button type="button" class="Read-btn btn btn-outline-primary my-3">Read more about us</button>
+        </div>
+        
+    </div>
+</section>
+<section class="container mx-auto">
+    <div class=" mx-auto row gx-5 my-5 py-5">
+        <div class="col card border-0 shadow m-3 p-3 "style="width: 18rem;">
+            
+                <img  class="card-img-top"  src="{% static 'images/Online earning-bro.png' %}" alt="photo">
+                <div class="card-body pb-5">
+                  <h5 class="card-title text-center text-secondary">Perfect community</h5>
+                  <p class="card-text text-center text-muted">We worked for in order to reduce the gap between Student and the teacher.</p>
+                </div>
+                </div>
+        <div class="col card border-0 shadow m-3 p-3 "style="width: 18rem;">
+            
+                <img  class="card-img-top"  src="{% static 'images/Setup-cuate.png' %}" alt="photo">
+                <div class="card-body pb-5">
+                  <h5 class="card-title text-center text-warning">Organized content</h5>
+                  <p class="card-text text-center text-muted">Smart-edu is smart enough to keep students focused on what they have to do.</p>
+                </div>
+                </div>
+        <div class="col card border-0 shadow m-3 p-3 "style="width: 18rem;">
+            
+                <img  class="card-img-top"  src="{% static 'images/Artificial intelligence-bro.png' %}" alt="photo">
+                <div class="card-body pb-5">
+                  <h5 class="card-title text-center text-info">Student Performance</h5>
+                  <p class="card-text text-center text-muted">Using the latest AI techniques, we help the teacher evaluate students with minimal effort.</p>
+                </div>
+                </div>
+        
+           
+    </div>
+    <div class=" row  my-5 pb-5 ">
+        <div class="col">
+            <img style="width:100%;width: 550px;height: 550px;" src="{% static 'images/4.png' %}" alt="photo">
+        </div>
+        <div class="col pt-5 mt-5">
+            <div class="mt-5 pt-5 ">
+                <h1>We’re <span class="text-primary">available</span> on all platforms</h1>
+                <p class="fw-lighter text-muted py-3 pe-5 me-5">
+                    No difference in the experience between mobile and website, we have worked hard to make this possible.
+                </p>
+                <div class=" d-flex justify-content-evenly row">
+                <button type="button" class="mx-2 col btn btn-outline-dark">Get it via app store</button>
+                <button type="button" class="me-5 col btn btn-dark">Get it via google play</button>
+            </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+		<!-- About US -->
+		<section class="container-fluid bg-light py-4 mt-5 border-top border-bottom">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-5">
+							<h1 class="mb-4 section-heading" style="color: #0053cb;">About Us</h1>
+							<p class="lh-base">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1550s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+					</div>
+					<div class="col-md-6 offset-1">
+						
+					</div>
+				</div>
+			</div>
+		</section>
+        <footer class="container-fluid">
+            <div class="container d-flex bd-highlight">
+                <div class="p-2 my-5 flex-grow-1 bd-highlight"><img style=" width:20%;" src="{% static 'images/5.png' %}"alt="logo"></div>
+                <div class="p-2 my-3 d-flex flex-column bd-highlight mb-3">
+                    <div class="p-2 bd-highlight">App store</div>
+                </div>
+                <div class="p-2 my-3 d-flex flex-column bd-highlight mb-3">
+                    <div class="p-2 bd-highlight">About us</div>
+                </div>
+            </div>
+        </footer>
+		<!-- End Testimonials -->
+
+{% endif %}
+
+
+{% endblock content %}
+

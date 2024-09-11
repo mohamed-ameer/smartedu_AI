@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} My Courses {% endblock %}
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="container mt-5 pt-5">
+  <section class="vh-10">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-lg-8 mb-4 mb-lg-0">
+          <div class="card mb-3" style="border-radius: .5rem;">
+            <div class="row g-0">
+              <div class="col-md-4 gradient-custom text-center text-white"
+                style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+                {% if profile.picture %}
+                <img src="{{ profile.picture.url }}"
+                  alt="Avatar" class="img-fluid my-5" style="width: 300px;height: 300px;" />
+                {% else %}
+                <img src="{% static 'images/no_avatar.jpg' %}"
+                 alt="Avatar" class="img-fluid my-5" style="width: 300px;height: 300px;">
+                {% endif %}
+                <h4><strong>Dr/:{{profile}}</strong></h4>
+              </div>
+              <div class="col-md-8">
+                <div class="card-body p-4">
+                  <h6>Information</h6>
+                  <hr class="mt-0 mb-4">
+                  <div class="row pt-1">
+                    <div class="col-6 mb-3">
+                      <h6>Email</h6>
+                      <p class="text-muted">{{profile.user.email}}  <a href="mailto:{{profile.user.email}}" target="_blank"><i class="fab fa-solid fa-envelope  me-3"></i></a></p>
+                    </div>
+                    <div class="col-6 mb-3">
+                      <h6>Univeristy Name</h6>
+                      <p class="text-muted">{{profile.univeristy_name}}</p>
+                    </div>
+                  </div>
+                  <hr class="mt-0 mb-4">
+                  <div class="row pt-1">
+                    <div class="col-6 mb-3">
+                      <h6>NO.Of_Courses</h6>
+                      <p class="text-muted">
+                        {{ courses.count }}
+                      </p>
+                    </div>
+                    <div class="col-6 mb-3">
+                      <h6>major</h6>
+                      <p class="text-muted">{{profile.major_types}}</p>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-start">
+                    <a href="{{ profile.facebook }}" target="_blank"><i class="fab fa-facebook-f fa-lg me-3"></i></a>
+                    <a href="{{ profile.github }}" target="_blank"><i class="fab fa-github fa-lg me-3"></i></a>
+                    <a href="{{ profile.linkedin }}" target="_blank"><i class="fab fa-linkedin fa-lg"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+          
+  <hr class="my-5" />
+
+  <section class="text-center">
+    <h4 class="mb-5" style="color: #0053cb;"><strong>My Courses</strong></h4>
+    <div class="mt-5 pt-5 d-grid gap-2 d-md-flex justify-content-md-end fixed-buttom">
+      <button class="btn btn-primary me-md-5 mt-3 px-2" type="button"onclick="window.location.href='{% url 'newcourse' %}'"><i> Add Course</i> </button>
+      
+    </div>
+    <div class="row">
+      {% for course in courses %}
+      <div class="col-lg-4 col-md-12 mb-4">
+        <div class="card">
+            <img src="{{ course.picture.url }}"id="imgCard" class="img-fluid" style=" height: 300px; ;" />
+            
+          <div class="card-body">
+            <h5 class="card-title " style="color: #0053cb;">{{ course.title }}</h5>
+            <p class="card-text text-muted "><small>
+              {{ course.description }}</small>
+            </p>
+            <div class="row text-secondary mx-5">
+            <p class="col"><strong>{{ course.category }}</strong></p>
+            <p class="col"><strong>{{ course.enrolled.count }} students</strong></p>
+            </div>
+            <p>course password:   <strong>{{ course.secret_code }}</strong></p>
+            
+            <a href="{% url 'course' course.id %}" class="btn btn-outline-primary fst-italic px-2">EDIT COURSE or ADD MATERIAl</a>
+          </div>
+        </div>
+      
+      
+      </div>
+      {% endfor %}
+      
+    </div>
+  </section>
+ 
+  <hr class="my-5" />
+
+
+</div>
+<!-- 
+<div class="row">
+{% for course in courses %}
+<p class="title"><b>{{ courses.count }}</b> Students</p>
+<div class="col s12 m4">
+  <div class="card">
+    <div class="card-image waves-effect waves-block waves-light">
+      <a href="{% url 'course' course.id %}"><img class="activator"></a>
+    </div>
+    <div class="card-content">
+      <span class="card-title activator grey-text text-darken-4"><b>{{ course.title }}</b><i class="material-icons right">more_vert</i></span>
+      <p class="title"><b>{{ course.enrolled.count }}</b> Students</p>
+      <a href="{% url 'edit-course' course.id %}" class="btn">Edit course</a>
+      <a href="{% url 'delete-course' course.id %}" class="btn red">Delete</a>
+    </div>
+    <div class="card-reveal">
+      <span class="card-title grey-text text-darken-4">About<i class="material-icons right">close</i></span>
+      <p>{{ course.description }}</p>
+    </div>
+  </div>
+</div>
+{% endfor %}
+</div> -->
+
+{% endblock %}
+
+{% block javascript %}
+<script src="js/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function(){
+    $(".card-body").hover(function(){
+      $(this).css("background-color", "#adb5bd")
+      $('#imgCard').css("background-color", "#adb5bd");
+    }, function(){
+ $(this).css("background-color", "white")
+ $('#imgCard').css('opacity') = '1';
+    });
+  });
+</script>
+{% endblock %}

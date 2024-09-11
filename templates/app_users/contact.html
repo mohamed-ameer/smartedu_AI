@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %} Contact Us {% endblock %}
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+		<!-- Services -->
+		<section class="container my-4">
+			<h1 class="text-center mb-4 section-heading border-bottom pb-2">Contact Us</h1>
+			<div class="row">
+        <div class="col-md-6">
+					<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d13738.818598654872!2d31.4857705!3d30.585882!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xa773b1ae8e624049!2sZagazig%20University!5e0!3m2!1sen!2seg!4v1656496254656!5m2!1sen!2seg" width="600" height="500" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+				</div>
+				<div class="col-md-6">
+					<table class="table table-bordered table-light">
+						<tr>
+							<th>Address</th>
+							<td>zagazig university، Shaibet an Nakareyah, Zagazig 2, Ash Sharqia Governorate 44511</td>
+						</tr>
+						<tr>
+							<th>Mobile</th>
+							<td>+201001733917<a href="http://wa.me/+201001733917" target="_blank">      <i class="fab fa-brands fa-whatsapp  me-3"></i></a></td>
+						</tr>
+						<tr>
+							<th>Telephone</th>
+							<td>055 2363635</td>
+						</tr>
+						<tr>
+							<th>Email</th>
+							<td>smarteduteam88@gmail.com<a href="mailto:smarteduteam88@gmail.com" target="_blank">      <i class="fab fa-solid fa-envelope  me-3"></i></a></td>
+						</tr>
+					</table>
+          <form method="post" class="form">
+            <div class="form-group">
+              {% csrf_token %}
+            	<div class="form-group">
+					<label for="id_name">Your Name:</label>
+					<input type="text" name="name" class="form-control validate" placeholder="Name" title="" required id="id_name">
+				</div>
+				<div class="form-group">
+					<label for="id_email">Your Email:</label>
+					<input type="email" name="email" class="form-control" placeholder="Email" title="" required id="id_email">
+				</div>
+				<div class="form-group">
+					<label for="id_message">Your Message:</label>
+					<textarea name="message" cols="40" rows="10" class="form-control" placeholder="please if you have problem send your message and the admin will contact with you,so put your detail in this message like[username,email,Id]. Thankyou ❤  			📕If you are an instructor send your detail here and the admin will check your information and make you as an instructor." title="" required id="id_message"></textarea>
+				</div>
+              	<input type="submit" value="Submit Response" class="btn btn-primary text-white btn-lg btn-block">
+            </div>
+          </form>
+
+				</div>
+			</div>
+		</section>
+		<!-- End -->
+{% endblock %}

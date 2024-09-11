@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ course.title }}/{{module.title}}/{{ assignment.title }}{% endblock %}
+{% block contentcourse %}
+<br>
+<br>
+<br>
+<br>
+  <div class="mt-5 row mx-auto">
+    <div class="col-md-3  mb-4 text-center">
+      <h1 class="pb-3 mx-auto bg-white" style="color: #0053cb;" >{{ course.title }}</h1>
+      <div class="bg-light gy-5  hover-overlay ripple shadow-2-strong rounded-5 ">            
+      {% if user.profile.user_type == 'teacher' %}
+      <h4 class="border-scandary border-bottom py-4"><a href="{% url 'edit-course' course.id %}" class="text-decoration-none row"><i class="fa-solid fa-file-pen col-4 "></i>Edit course</a></h4>
+      {% else %}
+      
+      {% endif %}            
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'modules' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-file col-4 "></i>units</a></h4>
+        {% if user.profile.user_type == 'student' %}
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'submissions' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-chart-column col-4 "></i>Submissions</a></h4>
+        {% endif %}
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'leaderboardcourse' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-house-chimney col-4 "></i>Leaderboard</a></h4>
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'questions' course.id %}" class="text-decoration-none row"><i class="fa-solid fa-circle-question col-4"></i>Questions</a></h4>
+        {% if profile.user_type == 'teacher' %}
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'student-submissions' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-chart-column col-4 "></i>Submissions</a></h4>
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'student-quiz-submissions' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-chart-column col-4 "></i>QuizSubmissions</a></h4>
+        {% endif %} 
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'chatzoom'%}"class="text-decoration-none row"><i class="fa-solid fa-video col-4"></i>Start Meeting</a></h4>
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'rooms' course.id%}"class="text-decoration-none row"><i class="fa-solid fa-message col-4"></i>Chat Room</a></h4>
+                   
+      </div>
+    </div>
+    <!-- eman -->
+    
+    
+<div class="col-md-8 mb-4 mt-5">
+<div class=" container " >
+  <div class=" text-start "style="font-family: 'Montserrat';">
+      <div class="mx-5 ">
+          <div class="row text-uppercase border-bottom border-secandary">
+          <h5 class="col-8 text-primary">Assignment</h5> 
+          {% if my_submissions.count == 0 %}
+          <p class="col-3 text-danger text-end" id="demo">Not submitted</p>
+          {% else %}  
+          <p class="col-3 text-primary text-end">submitted</p>
+          {% for submission in my_submissions %}
+            <p>Submited on: {{ submission.date }}</p>
+          {% endfor %} 
+          {% endif %}
+  
+          <!-- after submitted
+              <p class="col-3 text-success text-end"> submitted</p> -->
+      </div>
+      <div class=" mx-4 mb-2 mt-5" >
+                  <div class="form-control">     
+                    <table class="table table-hover text-center">
+                      <tr>
+                        <th>Assignment Name</th>
+                        <td>{{ assignment.title }}</td>
+                      </tr>
+                      <tr>
+                        <th>Submit Dead Time</th>
+                        <td>{{ assignment.dead_time }}</td>
+                      </tr>
+                      {{ assignment.dead_time | json_script:'endtime' }}
+                      <tr>
+                        <th>Assignment Type</th>
+                        <td>{{ assignment.assignment_type }}</td>
+                      </tr>
+                      <tr>
+                        <th>Language Type</th>
+                        <td>{{ assignment.language_type }}</td>
+                      </tr>
+                      <tr>
+                        <th>Points</th>
+                        <td>{{ assignment.points }}</td>
+                      </tr>
+                      <tr>
+                        <th>File in this assignment</th>
+                        <td>
+                          <ul class="list-group">
+                            <li class="list-group-item">
+                            <div>{{ assignment.get_file_name }}<a class="secondary-content" href="{{ assignment.file.url }}" download>
+                              <i class="fa-solid fa-cloud-arrow-down"></i></a>
+                            </div>
+                            </li>
+                            <!-- {% for file in assignment.files.all %}
+                              <li class="list-group-item">
+                              <div>{{ file.get_file_name }}<a class="secondary-content" href="{{ file.file.url }}" download>
+                                <i class="fa-solid fa-cloud-arrow-down"></i></a>
+                              </div>
+                              </li>
+                            {% endfor %}     -->
+                          </ul> 
+                        </td>
+                      </tr>
+                      {% if user.profile.user_type == 'student' %}
+                      <tr>
+                        <th>Points</th>
+                        <td><a href="{% url 'submissions' course.id %}"class="text-decoration-none">see your grades</a></td>
+                      </tr>
+                      {% endif %}
+                    </table>
+                   </div>
+       
+     
+      <div class="mt-3 d-grid gap-2 d-md-flex justify-content-md-end">
+        {% if my_submissions.count == 0 and user.profile.user_type == 'student' %}
+        <button class="btn btn-outline-primary me-md-2" type="button" id="submiteman"><a class="btn" href="{% url 'start-assignment' course_id module_id assignment.id %}">Start Assignment</a></button>
+        <button class="btn btn-outline-danger" type="button"><a class="btn" href="{% url 'modules' course.id %}">Cancel</a></button>
+        {% else %}  
+        <button class="btn btn-outline-danger" type="button"><a class="btn" href="{% url 'modules' course.id %}">Cancel</a></button>
+        {% endif %}
+      
+        </div>
+
+  </div>
+</div>
+</div>
+</div>
+
+<!-- eman end -->
+        
+      </div>
+  </div>
+
+
+<!-- hhh -->
+<!-- a7a -->
+<!-- <div class="col s12">
+  <ul class="collection with-header">
+    <li class="collection-header"><h4>My attempts</h4></li>
+    {% for submission in my_submissions %}
+        <li class="collection-item avatar">
+          <i class="material-icons circle">insert_chart</i>
+          <span class="title"><b>{{ submission.user.get_full_name }}</b></span>
+          <p>"{{ submission.comment }}"</p>
+          <p>Submited on: {{ submission.date }}</p>
+          <a href="#!" class="secondary-content"><i class="material-icons">delete</i></a>
+        </li>
+    {% endfor %}    
+  </ul>  
+</div> -->
+<!-- end -->
+<script>
+  
+// Set the date we're counting down to
+var endDate = JSON.parse(document.getElementById('endtime').textContent);
+var v1 =new Date(endDate).getTime();
+var uv1 =v1-7198566;
+// Update the count down every 1 second
+var x = setInterval(function() {
+  // Get today's date and time
+  var now = new Date().getTime();  
+  // Find the distance between now and the count down date
+  var distance = uv1 - now;
+  // console.log(distance); 
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+  // Output the result in an element with id="demo"
+//  document.getElementById("demo").innerHTML =   days + "day :"+ hours +"H";
+    
+  // If the count down is over, write some text 
+  console.log("notinside");
+  if(now < uv1 ){
+    console.log("if");
+  document.getElementById("submiteman").disabled = false;
+}
+else{
+  console.log("else");
+  document.getElementById("demo").innerHTML = "EXPIRED";
+  document.getElementById("submiteman").disabled = true;
+}
+}, 1000);
+// for icon image in Assignment page to upload file
+</script>
+
+{% endblock %}
+
+

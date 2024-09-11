@@ -1,0 +1,45 @@
+1-download the django project
+---->code --> download zip
+or
+---->git clone https://github.com/Graduation-Project-2022-Dr-Amr/Backend_Smart-Education-System.git
+===================================
+2-open project in your vscode:
+3-open vscode terminal 
+=>python -m venv .\venv
+=>venv\scripts\activate
+=>pip freeze > requirements1.txt //if this command             not work  and you get this message                   (Fatal error in launcher: Unable to                    create process using '")then you have                 to upgrade your pip==>
+         python -m pip install --upgrade pip
+
+=>python -m venv .\venv
+=>venv\scripts\activate
+=>pip install -r requirements.txt
+=>python manage.py makemigrations
+=>python manage.py migrate
+=>python manage.py createsuperuser
+=>python manage.py runserver
+
+==================================================
+inconsistent use of tabs and spaces in indentation
+
+1-Ctrl+Shift+P or View->Command Palette.
+2->Convert Indentation to Spaces
+3-press Enter.
+==================================================
+upload to github
+1-git add .
+2-git commit -m "add"
+3-git push
+==================================================
+django cannot find pillow
+pip install --force-reinstall Pillow
+==================================================
+Django - makemigrations - No changes detected
+Method : 1
+
+Step : 1
+
+Make sure your app must be included in INSTALLED_APPS in settings.py
+
+Stpe : 2
+
+python manage.py makemigrations <appname>

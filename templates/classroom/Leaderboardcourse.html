@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap4 %}
+{% block title %} {{ course.title }}/Leaderboard {% endblock %}         
+{% block contentcourse %}
+<br>
+<br>
+<br>
+<br>
+<div class="mt-5 row mx-auto">
+  <div class="col-md-3  mb-4 text-center">
+      <h1 class="pb-3 mx-auto bg-white" style="color: #0053cb;" >{{ course.title }}</h1>
+      <div class="bg-light gy-5  hover-overlay ripple shadow-2-strong rounded-5 ">            
+      {% if user.profile.user_type == 'teacher' %}
+      <h4 class="border-scandary border-bottom py-4"><a href="{% url 'edit-course' course.id %}" class="text-decoration-none row"><i class="fa-solid fa-file-pen col-4 "></i>Edit course</a></h4>
+      {% else %}
+      
+      {% endif %}            
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'modules' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-file col-4 "></i>units</a></h4>
+        {% if user.profile.user_type == 'student' %}
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'submissions' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-chart-column col-4 "></i>Submissions</a></h4>
+        {% endif %}
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'leaderboardcourse' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-house-chimney col-4 "></i>Leaderboard</a></h4>
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'questions' course.id %}" class="text-decoration-none row"><i class="fa-solid fa-circle-question col-4"></i>Questions</a></h4>
+        {% if user.profile.user_type == 'teacher' %}
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'student-submissions' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-chart-column col-4 "></i>Submissions</a></h4>
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'student-quiz-submissions' course.id %}"class="text-decoration-none row"><i class="fa-solid fa-chart-column col-4 "></i>QuizSubmissions</a></h4>
+        {% endif %} 
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'chatzoom'%}"class="text-decoration-none row"><i class="fa-solid fa-video col-4"></i>Start Meeting</a></h4>
+        <h4 class="border-scandary border-bottom py-4"><a href="{% url 'rooms' course.id%}"class="text-decoration-none row"><i class="fa-solid fa-message col-4"></i>Chat Room</a></h4>
+                   
+      </div>
+    </div>
+  <div class="col-md-8 mb-4">
+        <section class="container ">
+          <h3 class="title is-3" style="color: #0053cb;">Leaderboard</h3>
+          <table id="studentPoints" class="table table-bordered table-condensed table-striped table-hover text-center align-middle">
+            <thead class="table-white text-secondary">
+              <tr>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col">@Username</th>
+                <th scope="col">Full Name</th>
+                <th scope="col">Student ID</th>
+                <th scope="col">Points</th>
+              </tr>
+            </thead>
+            <tbody class="table-light">
+            {% for leader in leaders %}
+              <tr class="">
+                <th scope="row">
+                  {{ forloop.counter }}
+                </th>
+                <td class="firstName">
+                  {% if leader.user.profile.picture %}
+                  <img src="{{ leader.user.profile.picture.url}}" class="rounded-circle" alt="photo" style="width: 100px;height: 100px;">
+                  {% else %}
+                  <img src="{% static 'images/no_avatar.jpg' %}" class="rounded-circle" alt="photo" style="width:100px ;">
+                  {% endif %}
+                </td>
+                <td class="firstName">
+                {% if forloop.counter <= 10 %}
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-award" viewBox="0 0 16 16">
+                  <path d="M9.669.864 8 0 6.331.864l-1.858.282-.842 1.68-1.337 1.32L2.6 6l-.306 1.854 1.337 1.32.842 1.68 1.858.282L8 12l1.669-.864 1.858-.282.842-1.68 1.337-1.32L13.4 6l.306-1.854-1.337-1.32-.842-1.68L9.669.864zm1.196 1.193.684 1.365 1.086 1.072L12.387 6l.248 1.506-1.086 1.072-.684 1.365-1.51.229L8 10.874l-1.355-.702-1.51-.229-.684-1.365-1.086-1.072L3.614 6l-.25-1.506 1.087-1.072.684-1.365 1.51-.229L8 1.126l1.356.702 1.509.229z"/>
+                  <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1 4 11.794z"/>
+                </svg>
+                <h6 style="color:#0053cb;">@{{leader.user.username }}</h6>
+                {% else %}
+                @{{leader.user.username }}
+                {% endif %}
+                </td>
+                <td class="firstName">
+                {{leader.user.get_full_name }}
+                </td>
+                <td class="lastName">
+                  {{ leader.user.profile.college_id}}
+                </td>
+                <td class="points">
+                  {{leader.points}}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+          </table>
+        </section>
+      </div>
+    </div>
+{% endblock %}

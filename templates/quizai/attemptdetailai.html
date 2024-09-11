@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ course.title }}/{{module.title}}/{{ quiz.title }}{% endblock %}
+{% block content %}
+<br>
+<br>
+<br>
+<div class=" container mx-5 px-5 my-5 pt-5" >
+  <div class=" text-start "style="font-family: 'Montserrat';">
+      <div class="mx-5">
+        <div class="">     
+          <table class="table table-light">
+            <tr>
+              <th>Quiz Name</th>
+              <td>{{ quiz.title }}</td>
+            </tr>
+            <tr>
+              <th>Submit Dead Time</th>
+              <td>{{ quiz.due }}</td>
+            </tr>
+            <tr>
+              <th>Time limit:</th>
+              <td>{{ quiz.time_limit_mins }}</td>
+            </tr>
+            <tr>
+              <th>{{user.username}} score</th>
+              <td>
+                <ul class="list-group">
+                  {% for attempt in my_attempts %}
+                    <li class="list-group-item">
+                    <div><h6>Scored:{{ attempt.score }}</h6></div>
+                    </li>
+                  {% endfor %}    
+                </ul> 
+              </td>
+            </tr>
+
+          </table>
+         </div>
+<br>
+<br>
+          <div class=" row">
+              <h5 class="col-8">
+                {% if quiz.questions.count == 1 %}
+                {{ quiz.questions.count }} Question
+                {% else %}
+                {{ quiz.questions.count }} questions
+                {% endif %}
+              </h5> 
+               <h6 data-bs-dismiss="modal"class="col-3 text-danger text-end" id="demo"></h6>
+             
+              <p  class="text-muted border-secandary border-bottom pb-4 ">*Choose the correct answer for all questions</p>
+              
+          </div>
+          <div class="mx-4 my-2 " >
+            <form method="post" action="{% url 'submit-quiz' course_id module_id quiz.id %}" role="form" class="col s12">
+              {% csrf_token %}
+              {% for question in quiz.questions.all %}
+              <h5 class=" mb-2 ">({{ forloop.counter }}){{ question.question_text }}</h5>
+              <div class="form-check  mb-3">
+                 <input class="form-check-input" type="hidden" value="{{ question.id }}" name="question">
+             </div> 
+                {% for answer in question.answers.all %}
+                <div class="form-check  mb-3">
+                  <label class="form-check-label">
+                    <input class="form-check-input" name="answer" type="checkbox" value="{{ answer.id }}" {% if answer.is_correct == True %}checked="checked"{% endif %}>
+                    <span>{{ answer.answer_text }}</span>
+                  </label>
+                </div>
+                {% endfor %}
+                <hr>
+              {% endfor %}
+            </form>          
+      </div>
+      
+<div class="section">
+  <h5>Your answers</h5>
+  <div class="divider"></div>
+  {% for attempt in attempts %}
+    <h5 class="{% if attempt.answer.is_correct == True %}green{% else %}red{% endif %}-text"><b>{{ attempt.answer.answer_text }}</b></h5>
+  {% endfor %}
+</div>
+
+  </div>
+</div>
+{% endblock %}
